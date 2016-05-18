@@ -16,13 +16,19 @@ int main(int argc, char** argv)
 	read_test<STDCoarse>(key_max, threads, iters, prepop) -
 	read_test<STDRWBoost>(key_max, threads, iters, prepop);
 
-	std::cout << diff << std::endl;
+	std::cout << "Course vs. Boost " << diff << std::endl;
 
 	diff =
 	read_test<STDCoarse>(key_max, threads, iters, prepop) -
 	read_test<STDRWMax>(key_max, threads, iters, prepop);
 
-	std::cout << diff << std::endl;
+	std::cout << "Course vs. Custom " << diff << std::endl;
+
+	diff =
+	read_test<STDRWBoost>(key_max, threads, iters, prepop) -
+	read_test<STDRWMax>(key_max, threads, iters, prepop);
+
+	std::cout << "Boost vs. Custom " << diff << std::endl;
 
 	return 0;
 }
