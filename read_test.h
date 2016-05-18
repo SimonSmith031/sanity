@@ -27,19 +27,15 @@ std::chrono::high_resolution_clock::rep read_test(int key_max, int num_threads, 
 	barrier_1 = 0; barrier_2 = 0; barrier_3 = 0;
 
 	T map;
+	// pre-populate the map
+	for (int i = 0; i < pop; ++i)
+	{
+		int val = random_uint(0, key_max);
+		map.insert(std::make_pair(val, -val));
+	}
 
 	auto task = [&](int id)
 	{
-		if (id == 0)
-		{
-			// pre-populate the map
-			for (int i = 0; i < pop; ++i)
-			{
-				int val = random_uint(0, key_max);
-				map.insert(std::make_pair(val, -val));
-			}
-		}
-
 		barrier_1++;
 		while (barrier_1 < num_threads) { }
 		if (id == 0) start_time = std::chrono::high_resolution_clock::now();
